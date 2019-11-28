@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateABTest from '../../components/CreateABTest';
+import CreateABTest from '../CreateABTest';
 
 function Home() {
   return <CreateABTest />;
