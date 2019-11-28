@@ -1,11 +1,8 @@
 import React from 'react';
+import CreateABTest from '../../components/CreateABTest';
 
 function Home() {
-  return (
-    <div>
-      <span> App starter </span>
-    </div>
-  );
+  return <CreateABTest />;
 }
 
 export default Home;
