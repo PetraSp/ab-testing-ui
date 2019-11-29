@@ -1,5 +1,8 @@
 import React from 'react';
 import Form from './styles';
+import DatePicker from '../DatePicker';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 
 class CreateABTest extends React.Component {
   constructor(props) {
@@ -72,10 +75,7 @@ class CreateABTest extends React.Component {
 
         <div className="field">
           <label htmlFor="date">Start date</label>
-          <div className="ui input left icon">
-            <i className="calendar icon" />
-            <input type="text" name="start-date" placeholder="Start date"/>
-          </div>
+          <DatePicker />
         </div>
 
         <div className="inline fields">
