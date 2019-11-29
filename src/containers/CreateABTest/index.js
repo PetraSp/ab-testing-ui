@@ -5,29 +5,30 @@ class CreateABTest extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: ''
+      value1: '',
+      value2: ''
     };
   }
 
-  handleChange = (event) => {
-    const { value } = this.state
-    this.setState({
-      value: event.target.value,
-    });
+  handleChange = (event, group) => {
+    const { value } = event.target
+    this.setState(() => ({
+      [`value${group}`]: value
+    }));
   };
 
   render() {
-    const { value } = this.state;
+    const { value1, value2 } = this.state
     return (
 
       <Form className="ui form">
         <div className="field">
-          <label htmlFor="name">AB test name:</label>
-          <input type="text" name="name" id="first-name" placeholder="AB test name"/>
+          <label htmlFor="name">A/B test name:</label>
+          <input type="text" name="name" id="first-name" placeholder="AB test name" />
         </div>
         <div className="field">
           <label htmlFor="salt">Salt:</label>
-          <input type="text" name="last-name" id="last-name" placeholder="Salt"/>
+          <input type="text" name="last-name" id="last-name" placeholder="Salt" />
         </div>
 
         <div className="inline fields">
@@ -39,10 +40,10 @@ class CreateABTest extends React.Component {
                 name="shadow-id"
                 id="shadow-id"
                 value="shadow-id"
-                checked={this.value === 'shadow-id'}
+                checked={value1 === 'shadow-id'}
                 tabIndex="0"
                 className="hidden"
-                onChange={this.handleChange}
+                onChange={(event) => this.handleChange(event, 1)}
               />
               <label htmlFor="shadow-id">shadow id</label>
             </div>
@@ -54,10 +55,10 @@ class CreateABTest extends React.Component {
                 name="user-id"
                 id="user-id"
                 value="user-id"
-                checked={this.value === 'user-id'}
+                checked={value1 === 'user-id'}
                 tabIndex="0"
                 className="hidden"
-                onChange={this.handleChange}
+                onChange={(event) => this.handleChange(event, 1)}
               />
               <label htmlFor="user-id">user id</label>
             </div>
@@ -72,7 +73,7 @@ class CreateABTest extends React.Component {
         <div className="field">
           <label htmlFor="date">Start date</label>
           <div className="ui input left icon">
-            <i className="calendar icon"/>
+            <i className="calendar icon" />
             <input type="text" name="start-date" placeholder="Start date"/>
           </div>
         </div>
@@ -81,13 +82,31 @@ class CreateABTest extends React.Component {
           <label htmlFor="exclusive">Exclusive:</label>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="yes" checked="" id="yes" tabIndex="0" className="hidden"/>
+              <input
+                type="radio"
+                name="yes"
+                checked={value2 === 'yes'}
+                id="yes"
+                value="yes"
+                tabIndex="0"
+                className="hidden"
+                onChange={(event) => this.handleChange(event, 2)}
+              />
               <label htmlFor="yes">Yes</label>
             </div>
           </div>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="no" tabIndex="0" id="no" className="hidden"/>
+              <input
+                type="radio"
+                name="no"
+                checked={value2 === 'no'}
+                tabIndex="0"
+                id="no"
+                value="no"
+                className="hidden"
+                onChange={(event) => this.handleChange(event, 2)}
+              />
               <label htmlFor="no">No</label>
             </div>
           </div>
@@ -96,7 +115,9 @@ class CreateABTest extends React.Component {
         <button className="ui button" type="submit">Submit</button>
         <div>
           Selected:
-          {value}
+          {value1}
+          Secondselected:
+          {value2}
         </div>
       </Form>
     );
