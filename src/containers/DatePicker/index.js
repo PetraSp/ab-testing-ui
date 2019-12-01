@@ -1,7 +1,7 @@
+import 'react-dates/initialize';
 import React from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
-
 
 class DatePicker extends React.Component {
   constructor(props) {

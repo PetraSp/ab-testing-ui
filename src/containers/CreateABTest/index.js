@@ -1,12 +1,13 @@
-import React from 'react';
-import Form from './styles';
-import DatePicker from '../DatePicker';
 import 'react-dates/initialize';
+import React from 'react';
+import { Form, Button } from 'semantic-ui-react'
+import DatePicker from '../DatePicker';
 import 'react-dates/lib/css/_datepicker.css';
+import Slider from '../../components/Slider';
 
 class CreateABTest extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value1: '',
       value2: ''
@@ -14,105 +15,76 @@ class CreateABTest extends React.Component {
   }
 
   handleChange = (event, group) => {
-    const { value } = event.target
+    const { value } = event.target;
     this.setState(() => ({
       [`value${group}`]: value
     }));
   };
 
+
   render() {
-    const { value1, value2 } = this.state
+    const { value1, value2 } = this.state;
     return (
+      <Form>
+        <Form.Field>
+          <label>A/B test name:</label>
+          <input placeholder={'Choose a name that reflects what you\'re testing.'} />
+        </Form.Field>
 
-      <Form className="ui form">
-        <div className="field">
-          <label htmlFor="name">A/B test name:</label>
-          <input type="text" name="name" id="first-name" placeholder="AB test name" />
-        </div>
-        <div className="field">
-          <label htmlFor="salt">Salt:</label>
-          <input type="text" name="last-name" id="last-name" placeholder="Salt" />
-        </div>
+        <Form.Field>
+          <label>Salt:</label>
+          <input placeholder="Salt" />
+        </Form.Field>
 
-        <div className="inline fields">
-          <label htmlFor="identifier-type">Identifier type:</label>
-          <div className="field">
-            <div className="ui radio checkbox">
-              <input
-                type="radio"
-                name="shadow-id"
-                id="shadow-id"
-                value="shadow-id"
-                checked={value1 === 'shadow-id'}
-                tabIndex="0"
-                className="hidden"
-                onChange={(event) => this.handleChange(event, 1)}
-              />
-              <label htmlFor="shadow-id">shadow id</label>
-            </div>
-          </div>
-          <div className="field">
-            <div className="ui radio checkbox">
-              <input
-                type="radio"
-                name="user-id"
-                id="user-id"
-                value="user-id"
-                checked={value1 === 'user-id'}
-                tabIndex="0"
-                className="hidden"
-                onChange={(event) => this.handleChange(event, 1)}
-              />
-              <label htmlFor="user-id">user id</label>
-            </div>
-          </div>
-        </div>
+        <Form.Group inline>
+          <label>Identifier type:</label>
+          <Form.Radio
+            label="shadow-id"
+            value="shadow-id"
+            checked={value1 === 'shadow-id'}
+            onChange={(event) => this.handleChange(event, 1)}
+          />
+          <Form.Radio
+            label="user-id"
+            value="user-id"
+            checked={value1 === 'user-id'}
+            onChange={(event) => this.handleChange(event, 1)}
+          />
+        </Form.Group>
 
-        <div className="field">
-          <label htmlFor="base-population">Base population:</label>
-          <input type="text" name="base-population" id="base-population" placeholder="Base population"/>
-        </div>
+        <Form.Field>
+          <label>Weights:</label>
+          <Slider />
+        </Form.Field>
 
-        <div className="field">
-          <label htmlFor="date">Start date</label>
+        <Form.Field>
+          <label>Base population:</label>
+          <input placeholder="Base population" />
+        </Form.Field>
+
+
+        <Form.Field>
+          <label>Start date:</label>
           <DatePicker />
-        </div>
+        </Form.Field>
 
-        <div className="inline fields">
-          <label htmlFor="exclusive">Exclusive:</label>
-          <div className="field">
-            <div className="ui radio checkbox">
-              <input
-                type="radio"
-                name="yes"
-                checked={value2 === 'yes'}
-                id="yes"
-                value="yes"
-                tabIndex="0"
-                className="hidden"
-                onChange={(event) => this.handleChange(event, 2)}
-              />
-              <label htmlFor="yes">Yes</label>
-            </div>
-          </div>
-          <div className="field">
-            <div className="ui radio checkbox">
-              <input
-                type="radio"
-                name="no"
-                checked={value2 === 'no'}
-                tabIndex="0"
-                id="no"
-                value="no"
-                className="hidden"
-                onChange={(event) => this.handleChange(event, 2)}
-              />
-              <label htmlFor="no">No</label>
-            </div>
-          </div>
-        </div>
+        <Form.Group inline>
+          <label>Exclusive:</label>
+          <Form.Radio
+            label="yes"
+            value="yes"
+            checked={value2 === 'yes'}
+            onChange={(event) => this.handleChange(event, 2)}
+          />
+          <Form.Radio
+            label="no"
+            value="no"
+            checked={value2 === 'no'}
+            onChange={(event) => this.handleChange(event, 2)}
+          />
+        </Form.Group>
 
-        <button className="ui button" type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
         <div>
           Selected:
           {value1}
