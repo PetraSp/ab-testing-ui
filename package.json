@@ -63,6 +63,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "aphrodite": "^2.4.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -71,6 +72,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-with-styles": "^4.1.0",
+    "react-with-styles-interface-aphrodite": "^6.0.1",
     "rheostat": "^4.1.0",
     "semantic-ui-react": "^0.88.1",
     "styled-components": "^4.3.2"

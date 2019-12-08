@@ -1,16 +1,22 @@
 import React from 'react';
 import Rheostat from 'rheostat';
-import 'rheostat/css/rheostat.css';
 import 'react-dates/lib/css/_datepicker.css';
-
+import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
-import cssInterface from 'react-with-styles-interface-css';
 import RheostatDefaultTheme from 'rheostat/lib/themes/DefaultTheme';
 import ReactDatesDefaultTheme from 'react-dates/lib/theme/DefaultTheme';
+import SliderWrapper, { RheostatContainer, RheostatDescription } from './styles';
 
-ThemedStyleSheet.registerInterface(cssInterface);
+ThemedStyleSheet.registerInterface(aphroditeInterface);
+
 ThemedStyleSheet.registerTheme({
-  ...RheostatDefaultTheme,
+  rheostat: {
+    ...RheostatDefaultTheme.rheostat,
+    color: {
+      ...RheostatDefaultTheme.rheostat.color,
+      progressBar: '#3498DB',
+    }
+  },
   ...ReactDatesDefaultTheme,
 });
 
@@ -35,8 +41,16 @@ updateValues = (event, id) => {
 render() {
   const { controlGroup, provider1, provider2 } = this.state;
   return (
-    <div style={{ width: 400 }}>
-      <div style={{ marginTop: 50, marginBottom: 50 }}>
+    <SliderWrapper>
+      <RheostatContainer>
+        <RheostatDescription>
+          <span>
+            Control Group:
+          </span>
+          <span>
+            {controlGroup}%
+          </span>
+        </RheostatDescription>
         <Rheostat
           onValuesUpdated={(e) => this.updateValues(e, 'controlGroup')}
           min={0}
@@ -64,35 +78,53 @@ render() {
             }
           }}
         />
-      </div>
-      <Rheostat
-        onValuesUpdated={(e) => this.updateValues(e, 'provider1')}
-        min={0}
-        max={100}
-        snap
-        values={[provider1]}
-        algorithm={{
-          getValue: (value, min, max) => {
-            const rest = controlGroup + provider2;
-            return value + rest > 100
-              ? Math.round(100 - rest)
-              : Math.round(((value - min) / (max - min)) * 100);
-          },
-          getPosition: (pos, min, max) => {
-            const decimal = pos / 100;
-            if (pos <= 0) {
-              return min;
-            }
+      </RheostatContainer>
+      <RheostatContainer>
+        <RheostatDescription>
+          <span>
+            Provider 1:
+          </span>
+          <span>
+            {provider1}%
+          </span>
+        </RheostatDescription>
+        <Rheostat
+          onValuesUpdated={(e) => this.updateValues(e, 'provider1')}
+          min={0}
+          max={100}
+          snap
+          values={[provider1]}
+          algorithm={{
+            getValue: (value, min, max) => {
+              const rest = controlGroup + provider2;
+              return value + rest > 100
+                ? Math.round(100 - rest)
+                : Math.round(((value - min) / (max - min)) * 100);
+            },
+            getPosition: (pos, min, max) => {
+              const decimal = pos / 100;
+              if (pos <= 0) {
+                return min;
+              }
 
-            if (pos >= 100) {
-              return max;
-            }
+              if (pos >= 100) {
+                return max;
+              }
 
-            return Math.round((max - min) * decimal + min);
-          }
-        }}
-      />
-      <div style={{ marginTop: 50 }}>
+              return Math.round((max - min) * decimal + min);
+            }
+          }}
+        />
+      </RheostatContainer>
+      <RheostatContainer>
+        <RheostatDescription>
+          <span>
+            Provider 2:
+          </span>
+          <span>
+            {provider2}%
+          </span>
+        </RheostatDescription>
         <Rheostat
           onValuesUpdated={(e) => this.updateValues(e, 'provider2')}
           min={0}
@@ -120,20 +152,8 @@ render() {
             }
           }}
         />
-      </div>
-      <p>
-Control Group:
-        {controlGroup}
-      </p>
-      <p>
-Provider 1:
-        {provider1}
-      </p>
-      <p>
-Provider 2:
-        {provider2}
-      </p>
-    </div>
+      </RheostatContainer>
+    </SliderWrapper>
   );
 }
 }
