@@ -39,7 +39,7 @@ class CreateABTest extends React.Component {
     const { value1, value2 } = this.state;
     return (
       <Container className="ui centered">
-        <Form size="medium">
+        <Form>
           <Header as="h2" textAlign="center" style={{ marginTop: 15 }}>
             New A/B Test
           </Header>
