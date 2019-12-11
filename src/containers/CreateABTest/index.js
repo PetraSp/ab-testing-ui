@@ -35,22 +35,44 @@ class CreateABTest extends React.Component {
     }));
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    for (const [key, value] of data.entries()) {
+      console.log(key, value);
+    }
+
+    // fetch('/api/form-submit-url', {
+    //   method: 'POST',
+    //   body: data,
+    // });
+  }
+
+  // testingCB = (value, id) => console.log('cb fired', value, id)
+
   render() {
     const { value1, value2 } = this.state;
     return (
       <Container className="ui centered">
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <Header as="h2" textAlign="center" style={{ marginTop: 15 }}>
             New A/B Test
           </Header>
           <Form.Field style={fieldsMargin}>
             <label style={labelColor}>A/B test name:</label>
-            <Form.Input placeholder={'Choose a name that reflects what you\'re testing.'} />
+            <Form.Input
+              placeholder={'Choose a name that reflects what you\'re testing.'}
+              name="testName"
+            />
           </Form.Field>
 
           <Form.Field style={fieldsMargin}>
             <label style={labelColor}>Salt:</label>
-            <Form.Input placeholder="Salt" />
+            <Form.Input
+              placeholder="Salt"
+              name="salt"
+            />
           </Form.Field>
 
           <Form.Group inline style={fieldsMargin}>
@@ -59,7 +81,7 @@ class CreateABTest extends React.Component {
               <Radio
                 label="shadow-id"
                 id="shadow-id"
-                name="radioGroup"
+                name="radioGroup1"
                 value="shadow-id"
                 checked={value1 === 'shadow-id'}
                 onChange={(event) => this.handleChange(event, 1)}
@@ -69,7 +91,7 @@ class CreateABTest extends React.Component {
               <Radio
                 label="user-id"
                 id="user-id"
-                name="radioGroup"
+                name="radioGroup1"
                 value="user-id"
                 checked={value1 === 'user-id'}
                 onChange={(event) => this.handleChange(event, 1)}
@@ -84,7 +106,7 @@ class CreateABTest extends React.Component {
 
           <Form.Field style={fieldsMargin}>
             <label style={labelColor}>Base population:</label>
-            <Form.Input placeholder="Base population" />
+            <Form.Input placeholder="Base population" name="basePopulation" />
           </Form.Field>
 
           <Form.Field style={fieldsMargin}>
@@ -98,7 +120,7 @@ class CreateABTest extends React.Component {
               <Radio
                 label="yes"
                 id="yes"
-                name="radioGroup"
+                name="radioGroup2"
                 value="yes"
                 checked={value2 === 'yes'}
                 onChange={(event) => this.handleChange(event, 2)}
@@ -108,7 +130,7 @@ class CreateABTest extends React.Component {
               <Radio
                 label="no"
                 id="no"
-                name="radioGroup"
+                name="radioGroup2"
                 value="no"
                 checked={value2 === 'no'}
                 onChange={(event) => this.handleChange(event, 2)}
@@ -116,7 +138,7 @@ class CreateABTest extends React.Component {
             </Form.Field>
           </Form.Group>
 
-          <Button style={{ margin: '0 auto', display: 'block' }} color="blue" type="submit">Submit</Button>
+          <Button style={{ margin: '0 auto', display: 'block' }} color="blue">Submit</Button>
           <div />
         </Form>
       </Container>
